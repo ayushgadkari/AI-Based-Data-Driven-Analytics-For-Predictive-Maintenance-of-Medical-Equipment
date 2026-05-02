@@ -1,1 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - Predictive Maintenance</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Full-page layout */
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Background image */
+body {
+  background-image: url("img.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+
+  /* Center content vertically and horizontally */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Dark overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: -1;
+}
+
+/* Login box */
+.login-container {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 40px 35px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  width: 100%;
+  max-width: 400px;
+  min-width: 300px; /* prevents shrinking too much */
+  animation: slideFade 0.8s ease;
+
+  /* Center content inside box */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Slide animation */
+@keyframes slideFade {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Title */
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #2c3e50;
+}
+
+/* Form styling */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+}
+
+.form-group input:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(52,152,219,0.15);
+}
+
+/* Button */
+.btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(to right, #00b4db, #0083b0);
+  color: white;
+  font-size: 1.05em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Error box */
+.alert-danger {
+  color: #e74c3c;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 0.9em;
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 450px) {
+  .login-container {
+    padding: 30px 20px;
+  }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="login-container">
+  <h2>Login</h2>
+
+  <div id="login-error" class="alert-danger" style="display:none;"></div>
+
+  <div class="form-group">
+    <label>Username</label>
+    <input type="text" id="username">
+  </div>
+
+  <div class="form-group">
+    <label>Password</label>
+    <input type="password" id="password">
+  </div>
+
+  <button class="btn" onclick="login()">Login</button>
+</div>
+
+<script>
+async function login() {
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const errorBox = document.getElementById("login-error");
+
+  errorBox.style.display = "none";
+
+  if (!username || !password) {
+    errorBox.innerText = "Username and password required";
+    errorBox.style.display = "block";
+    return;
+  }
+
+  try {
+    const res = await fetch("http://127.0.0.1:8000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    });
+
+    if (!res.ok) throw new Error("Invalid credentials");
+
+    const data = await res.json();
+
+    localStorage.setItem("token", data.access_token);
+    window.location.href = "index.html";
+
+  } catch (err) {
+    errorBox.innerText = err.message;
+    errorBox.style.display = "block";
+  }
+}
+</script>
+
+</body>
+</html>
