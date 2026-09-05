@@ -44,8 +44,6 @@ uvicorn backend.main:app --reload
 📦 Model Files
 Model files are not included in this repository due to size limits.
 
-Download the pre-trained model files from your cloud storage (e.g., Google Drive or Hugging Face).
-
 Place the downloaded files inside the backend/ directory.
 
 👨‍💻 Author
