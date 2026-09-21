@@ -16,7 +16,7 @@ An AI-powered system that predicts equipment failures before they occur using ma
 ## 🧠 Model Performance
 * **Training Data:** 3,000+ medical equipment records
 * **Mean Absolute Error (MAE):** 4.28 days
-* **R² Score:** 0.387
+* **R² Score:** 0.387 *(Realistic baseline reflecting real-world variance)*
 
 ---
 
@@ -33,18 +33,19 @@ An AI-powered system that predicts equipment failures before they occur using ma
    ```bash
    git clone [https://github.com/ayushgadkari/AI-Based-Data-Driven-Analytics-For-Predictive-Maintenance-of-Medical-Equipment.git](https://github.com/ayushgadkari/AI-Based-Data-Driven-Analytics-For-Predictive-Maintenance-of-Medical-Equipment.git)
    cd AI-Based-Data-Driven-Analytics-For-Predictive-Maintenance-of-Medical-Equipment
-Install dependencies:
 
-Bash
-pip install -r requirements.txt
-Start the backend server:
+2. Install dependencies:
+    ```bash
+   pip install -r requirements.txt
 
-Bash
-uvicorn backend.main:app --reload
-📦 Model Files
+3. Start the backend server:
+    ```bash
+   uvicorn backend.main:app --reload
+
+Model Files
 Model files are not included in this repository due to size limits.
 
-Place the downloaded files inside the backend/ directory.
+Please place your trained model files inside the backend/ directory before running the server.
 
 👨‍💻 Author
 Ayush Gadkari
